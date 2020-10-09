@@ -10,25 +10,33 @@
 </head>
 
 <body>
-    <div id="canvas">
+    <canvas id="canvas">
         <script>
-            canvas.onclick = (e) => {
-                console.log(e); /* console log调试法打出e的方法，在其中找到适合的属性，逐步递进 */
-                console.log(e.clientX);
-                console.log(e.clientY);   /* 打印出监听到的用户点击的坐标 */
-                let div = document.createElement('div');
-                div.style.position = 'absolute';
-                div.style.left = e.clientX + 'px';
-                div.style.top = e.clientY + 'px';
-                div.style.width = '6px';
-                div.style.height = '6px';
-                div.style.transform = 'translate(-3px, -3px)';
-                div.style.borderRadius = '50%';
-                div.style.background = 'black';
-                canvas.appendChild(div);
+            var canvas = document.getElementById("canvas");
+            canvas.width = document.documentElement.clientWidth;
+            canvas.height = document.documentElement.clientHeight;
+            var ctx = canvas.getContext("2d");
+            let painting = false;
+            canvas.onmousedown = () => {
+                painting = true
+            }
+            ctx.fillStyle = "black";
+            ctx.strokeStyle = 'none';
+            canvas.onmousemove = (e) => {
+                if (painting === true) {
+                    ctx.beginPath();
+                    ctx.arc(e.clientX, e.clientY, 5, 0, 2 * Math.PI);
+                    ctx.stroke();
+                    ctx.fill();
+                } else {
+                    console.log('nothing')
+                }
+            }
+            canvas.onmouseup = () => {
+                painting = false;
             }
         </script>
-    </div>
+    </canvas>
 </body>
 
 </html>
