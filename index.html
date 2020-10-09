@@ -1,11 +1,34 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>画板</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    hi
+    <div id="canvas">
+        <script>
+            canvas.onclick = (e) => {
+                console.log(e); /* console log调试法打出e的方法，在其中找到适合的属性，逐步递进 */
+                console.log(e.clientX);
+                console.log(e.clientY);   /* 打印出监听到的用户点击的坐标 */
+                let div = document.createElement('div');
+                div.style.position = 'absolute';
+                div.style.left = e.clientX + 'px';
+                div.style.top = e.clientY + 'px';
+                div.style.width = '6px';
+                div.style.height = '6px';
+                div.style.transform = 'translate(-3px, -3px)';
+                div.style.borderRadius = '50%';
+                div.style.background = 'black';
+                canvas.appendChild(div);
+            }
+        </script>
+    </div>
 </body>
+
 </html>
