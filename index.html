@@ -12,13 +12,23 @@
 <body>
     <canvas id="canvas">
         <script>
-            var canvas = document.getElementById("canvas");
+            let canvas = document.getElementById("canvas");
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
-            var ctx = canvas.getContext("2d");
+            let ctx = canvas.getContext("2d");
+            ctx.fillStyle = "black";
+            ctx.strokeStyle = 'none';
             let painting = false;
-            var isTouchDevice = 'ontouchstart' in document.documentElement;
+            let isTouchDevice = 'ontouchstart' in document.documentElement;
             console.log(isTouchDevice);
+
+            function drawline(x1, x2, y1, y2) {
+                ctx.beginPath();
+                ctx.moveTo(x1, x2);
+                ctx.lineTo(y1, y2);
+                ctx.stroke();
+            }
+
             if (isTouchDevice) {
                 canvas.ontouchmove = (e) => {
                     let x = e.touches[0].clientX;
@@ -34,18 +44,14 @@
                 }
             }
 
-            ctx.fillStyle = "black";
-            ctx.strokeStyle = 'none';
             canvas.onmousemove = (e) => {
                 if (painting === true) {
-                    ctx.beginPath();
-                    ctx.arc(e.clientX, e.clientY, 5, 0, 2 * Math.PI);
-                    ctx.stroke();
-                    ctx.fill();
+                    drawline(0,0,e.clientX,e.clientY)
                 } else {
                     console.log('nothing')
                 }
             }
+
             canvas.onmouseup = () => {
                 painting = false;
             }
